@@ -22,7 +22,7 @@ size_t	ft_strlen(const char *src);
 char 	*ft_strcpy(char *dest, const char *src);
 int		ft_strcmp(const char *s1, const char *s2);
 ssize_t	ft_write(int fd, const void *buf, size_t count);
-size_t	ft_read(int fd, void *buf, size_t count);
+ssize_t	ft_read(int fd, void *buf, size_t count);
 char	*ft_strdup(const char *s);
 
 void	test_ft_strlen(size_t callback(const char *))
@@ -89,7 +89,7 @@ void	test_ft_strcmp(int callback(const char *, const char *))
 
 void	test_ft_write(ssize_t callback(int, const void*, size_t), const char *path)
 {
-	int			fd = open(path, O_WRONLY | O_CREAT , 0777);
+	int			fd = open(path, O_WRONLY | O_CREAT , 0644);
 	const void	*words = "Hello World!";
 
 	if (fd < 0)
@@ -112,6 +112,38 @@ void	test_ft_write(ssize_t callback(int, const void*, size_t), const char *path)
 	}
 }
 
+void	test_ft_read(ssize_t callback(int, void *, size_t))
+{
+	int		fd = open("read_in", O_RDONLY);
+	void	*buf = calloc(100, 1);
+
+	if (fd < 0)
+	{
+		return;
+	}
+	size_t		count01 = 5;
+	ssize_t		res01 = callback(fd, buf, count01);
+	printf("counts: \"%zu\" -> return: %zd, buf: \"%s\"\n", count01, res01, (char * )buf);
+	memset(buf, 0, sizeof(buf));
+	size_t		count02 = 20;
+	ssize_t		res02 = callback(fd, buf, count02);
+	printf("counts: \"%zu\" -> return: %zd, buf: \"%s\"\n", count02, res02, (char * )buf);
+	memset(buf, 0, sizeof(buf));
+
+	fd = open("vain", O_WRONLY);
+	ssize_t res03 = callback(fd, buf, count01);
+	if (res03 < 0)
+	{
+		printf("fd: %d, -> return: %zd, errno: %d\n", fd, res03, errno);
+	}
+	free(buf);
+}
+
+void	test_ft_strdup(char *callback(const char *))
+{
+
+}
+
 int main()
 {
 	//printf("------ft_strlen------\n");
@@ -131,10 +163,21 @@ int main()
 	//printf("------strcmp------\n");
 	//test_ft_strcmp(strcmp);
 
-	printf("------write------\n");
-	test_ft_write(write, "write_out");
-	printf("------ft_write------\n");
-	test_ft_write(ft_write, "ft_write_out");
+	//printf("------write------\n");
+	//test_ft_write(write, "write_out");
+	//printf("------ft_write------\n");
+	//test_ft_write(ft_write, "ft_write_out");
+
+	//printf("------read------\n");
+	//test_ft_read(read);
+	//printf("------ft_read------\n");
+	//test_ft_read(ft_read);
+
+	printf("------strdup------\n");
+	test_ft_strdup(strdup);
+	printf("------ft_strdup------\n");
+	test_ft_strdup(ft_strdup);
 	
+
 	return 0;
 }
