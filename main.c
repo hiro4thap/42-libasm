@@ -14,11 +14,14 @@
 #include <printf.h>
 #include <string.h>
 #include <stdlib.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <errno.h>
 
 size_t	ft_strlen(const char *src);
 char 	*ft_strcpy(char *dest, const char *src);
 int		ft_strcmp(const char *s1, const char *s2);
-size_t	ft_write(int fd, const void *buf, size_t count);
+ssize_t	ft_write(int fd, const void *buf, size_t count);
 size_t	ft_read(int fd, void *buf, size_t count);
 char	*ft_strdup(const char *s);
 
@@ -84,6 +87,31 @@ void	test_ft_strcmp(int callback(const char *, const char *))
 	//callback(NULL, s1);
 }
 
+void	test_ft_write(ssize_t callback(int, const void*, size_t), const char *path)
+{
+	int			fd = open(path, O_WRONLY | O_CREAT , 0777);
+	const void	*words = "Hello World!";
+
+	if (fd < 0)
+	{
+		return;
+	}
+	size_t		count01 = 5;
+	ssize_t		res01 = callback(fd, words, count01);
+	printf("file: \"%s\", words: \"%s\", counts: \"%zu\" -> return: %zd\n", path, (char *)words, count01, res01);
+	size_t		count02 = 12;
+	ssize_t		res02 = callback(fd, words, count02);
+	printf("file: \"%s\", words: \"%s\", counts: \"%zu\" -> return: %zd\n", path, (char *)words, count02, res02);
+	close(fd);
+
+	fd = open("vain", O_WRONLY);
+	ssize_t res03 = callback(fd, words, 5);
+	if (res03 < 0)
+	{
+		printf("fd: %d, -> return: %zd, errno: %d\n", fd, res03, errno);
+	}
+}
+
 int main()
 {
 	//printf("------ft_strlen------\n");
@@ -98,10 +126,15 @@ int main()
 	//test_ft_strcpy(strcpy);
 	//printf("\n");
 
-	printf("------ft_strcmp------\n");
-	test_ft_strcmp(ft_strcmp);
-	printf("------strcmp------\n");
-	test_ft_strcmp(strcmp);
+	//printf("------ft_strcmp------\n");
+	//test_ft_strcmp(ft_strcmp);
+	//printf("------strcmp------\n");
+	//test_ft_strcmp(strcmp);
+
+	printf("------write------\n");
+	test_ft_write(write, "write_out");
+	printf("------ft_write------\n");
+	test_ft_write(ft_write, "ft_write_out");
 	
 	return 0;
 }
