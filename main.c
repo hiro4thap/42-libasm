@@ -136,12 +136,16 @@ void	test_ft_read(ssize_t callback(int, void *, size_t))
 	{
 		printf("fd: %d, -> return: %zd, errno: %d\n", fd, res03, errno);
 	}
+
 	free(buf);
 }
 
 void	test_ft_strdup(char *callback(const char *))
 {
-
+	const char *src = "Hello World!";
+	char *ptr = callback(src);
+	printf("src: \"%s\" -> return: \"%s\"\n", src, ptr);
+	free(ptr);
 }
 
 int main()
@@ -177,7 +181,6 @@ int main()
 	test_ft_strdup(strdup);
 	printf("------ft_strdup------\n");
 	test_ft_strdup(ft_strdup);
-	
 
 	return 0;
 }
