@@ -6,7 +6,7 @@
 /*   By: hiono <hiono@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 11:57:35 by hiono             #+#    #+#             */
-/*   Updated: 2025/12/24 19:11:37 by hiono            ###   ########.fr       */
+/*   Updated: 2025/12/27 10:33:27 by hiono            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,32 +150,35 @@ void	test_ft_strdup(char *callback(const char *))
 
 int main()
 {
-	//printf("------ft_strlen------\n");
-	//test_ft_strlen(ft_strlen);
-	//printf("------strlen------\n");
-	//test_ft_strlen(strlen);
-	//printf("\n");
+	printf("------ft_strlen------\n");
+	test_ft_strlen(ft_strlen);
+	printf("------strlen------\n");
+	test_ft_strlen(strlen);
+	printf("\n");
 
-	//printf("------ft_strcpy------\n");
-	//test_ft_strcpy(ft_strcpy);
-	//printf("------strcpy------\n");
-	//test_ft_strcpy(strcpy);
-	//printf("\n");
+	printf("------ft_strcpy------\n");
+	test_ft_strcpy(ft_strcpy);
+	printf("------strcpy------\n");
+	test_ft_strcpy(strcpy);
+	printf("\n");
 
-	//printf("------ft_strcmp------\n");
-	//test_ft_strcmp(ft_strcmp);
-	//printf("------strcmp------\n");
-	//test_ft_strcmp(strcmp);
+	printf("------ft_strcmp------\n");
+	test_ft_strcmp(ft_strcmp);
+	printf("------strcmp------\n");
+	test_ft_strcmp(strcmp);
+	printf("\n");
 
-	//printf("------write------\n");
-	//test_ft_write(write, "write_out");
-	//printf("------ft_write------\n");
-	//test_ft_write(ft_write, "ft_write_out");
+	printf("------write------\n");
+	test_ft_write(write, "write_out");
+	printf("------ft_write------\n");
+	test_ft_write(ft_write, "ft_write_out");
+	printf("\n");
 
-	//printf("------read------\n");
-	//test_ft_read(read);
-	//printf("------ft_read------\n");
-	//test_ft_read(ft_read);
+	printf("------read------\n");
+	test_ft_read(read);
+	printf("------ft_read------\n");
+	test_ft_read(ft_read);
+	printf("\n");
 
 	printf("------strdup------\n");
 	test_ft_strdup(strdup);
